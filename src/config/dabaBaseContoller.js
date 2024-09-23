@@ -1,45 +1,44 @@
 const mysql = require('mysql2');
-const { promisify }= require('util');
-const  { database } = require('./keys');
+const { promisify } = require('util');
+const { database } = require('./keys');
 const { CONSTANTS } = require('../utils/utils');
-const { error, Console } = require('console');
 
-const pool = mysql.createPool(database);//se crea el  pool de conexiones
+// Crear el pool de conexiones
+const pool = mysql.createPool(database);
 
-
-
-//inica conaexion con la base de datos
-pool.getConnection((error,conexion) => {
-    //validar si la conexion tiene algun tipo de errror 
-    if(error){
-        switch(error.code){
-            case CONSTANTS.PROTOCOL_CONNNECTION_LOST:
-                //indicaque la concexion con la db perdida
+// Iniciar conexión con la base de datos
+pool.getConnection((error, conexion) => {
+    // Validar si la conexión tiene algún tipo de error
+    if (error) {
+        switch (error.code) {
+            case CONSTANTS.PROTOCOL_CONNECTION_LOST: // Notar la corrección en el nombre de la constante
                 console.error('DATABASE CONNECTION WAS CLOSED');
                 break;
-              // indica que existen demasiadas conexiones
-            case CONSTANTS.ER_ACCESS_DENIED_ERROR:
-                console.error('DATABASE HAS TO MANY CONNECTIONS');
+            case CONSTANTS.ER_CON_COUNT_ERROR: // Demasiadas conexiones
+                console.error('DATABASE HAS TOO MANY CONNECTIONS');
                 break;
-              //INDICA QUE LA CONEXION FUE RECHAZADA 
-            case CONSTANTS.ENCONNREFUSED:
-                Console.error('DATABASE CONNECTION WAS REFUSED');
+            case CONSTANTS.ECONNREFUSED: // Conexión rechazada (error tipográfico corregido)
+                console.error('DATABASE CONNECTION WAS REFUSED');
                 break;
-              //INDICA QUE EL ACCESO ESTA DENEGADO
-            case CONSTANTS.ER_ACCESS_DENIED_ERROR:
-                Console.error('ACCESS DENIED FOR USER'); 
+            case CONSTANTS.ER_ACCESS_DENIED_ERROR: // Acceso denegado
+                console.error('ACCESS DENIED FOR USER');
+                break;
+            default:
+                console.error('UNKNOWN DATABASE ERROR:', error);
                 break;
         }
     }
-    //SI LA CONEXION ES EXITOSA , IMPRIMIR UN MENSAJE INDICANDOLO 
-    if (conexion){
-        console.log('Conexion esatablecida conla base de datos');
-        conexion.release();
-    } 
+
+    // Si la conexión es exitosa, imprimir mensaje indicando éxito
+    if (conexion) {
+        console.log('Conexión establecida con la base de datos');
+        conexion.release(); // Liberar la conexión
+    }
+
     return;
 });
 
-//configurando PROMISIY para permitir cada consulta un async/await (promesas)
+// Configurar promisify para permitir async/await con pool.query
 pool.query = promisify(pool.query);
 
 module.exports = pool;
