@@ -30,15 +30,13 @@ pool.getConnection((error, conexion) => {
 
 
     // Si la conexión es exitosa, imprimir mensaje indicando éxito
-    if (conexion) {
-        console.log('Conexión establecida con la base de datos');
-        conexion.release(); // Liberar la conexión
+    if(conexion){
+        console.log('Conexion establecida con la base de datos');
+        conexion.release();
     }
-
     return;
 });
 
-// Configurar promisify para permitir async/await con pool.query
 pool.query = promisify(pool.query);
 
 module.exports = pool;
