@@ -1,0 +1,86 @@
+<div class="container p-4">
+    <div class="row justify-content-center">
+        <h1>Agregar Profesor</h1>
+    </div>
+     
+    <div class="row justify-content-center mt-4">
+       <div class="col-md-4">
+        <form action="/profesores/agregar" method="POST" onsubmit="return validarFormulario()">
+            <div class="form-group">
+                <input type="text" class="form-control" name="idProfesor" placeholder="ID del Profesor" autofocus required />
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="profesor" placeholder="Nombre del Profesor" autofocus required />
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="apellido" placeholder="Apellido" autofocus required />
+            </div>
+            <div class="form-group">
+                <input type="date" class="form-control" name="fechanacimiento" required />
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="profesion" placeholder="Profesión" autofocus required />
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="genero" placeholder="Género" maxlength="1" required />
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" name="email" placeholder="Correo Electrónico" autofocus required />
+            </div>
+             <div id="mensaje" style="display: none;"></div>
+            <div class="form-group">
+                <button class="btn btn-success btn-block">Guardar</button>
+            </div>
+        </form>
+       </div>
+    </div>
+</div>
+
+<script>
+    function validarFormulario() {
+        var idProfesor = document.querySelector('[name="idProfesor"]').value;
+        var profesor = document.querySelector('[name="profesor"]').value;
+        var apellido = document.querySelector('[name="apellido"]').value;
+        var fechanacimiento = document.querySelector('[name="fechanacimiento"]').value;
+        var profesion = document.querySelector('[name="profesion"]').value;
+        var genero = document.querySelector('[name="genero"]').value;
+        var email = document.querySelector('[name="email"]').value;
+
+        if (idProfesor.trim() === '' || profesor.trim() === '' || apellido.trim() === '' || fechanacimiento.trim() === '' || profesion.trim() === '' || genero.trim() === '' || email.trim() === '') {
+            alert('Por favor, complete todos los campos.');
+            return false; // Detiene el envío del formulario
+        }
+
+        return true; // Permite el envío del formulario
+    }
+
+    // Esta función muestra un mensaje y luego lo oculta después de un tiempo
+    function mostrarMensaje(tipo, texto) {
+        var mensaje = document.getElementById('mensaje');
+        mensaje.innerHTML = `<div class="alert alert-${tipo}" role="alert">${texto}</div>`;
+        mensaje.style.display = 'block';
+
+        setTimeout(function() {
+            mensaje.style.display = 'none';
+        }, 3000); // Oculta el mensaje después de 3 segundos (3000 milisegundos)
+    }
+
+    // Aquí se maneja la respuesta después de enviar el formulario
+    document.getElementById('agregarFormulario').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var valido = validarFormulario();
+
+        if (valido) {
+            // Si el formulario es válido, puedes enviarlo al servidor aquí
+            // Y luego mostrar el mensaje de éxito o error
+            var resultado = true; // Esto debería ser el resultado de tu inserción
+
+            if (resultado) {
+                mostrarMensaje('success', 'Registro insertado con éxito');
+            } else {
+                mostrarMensaje('danger', 'Ocurrió un problema al guardar el registro');
+            }
+        }
+    });
+</script>

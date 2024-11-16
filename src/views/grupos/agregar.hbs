@@ -1,0 +1,63 @@
+<div class="container p-4">
+    <div class="row justify-content-center">
+        <h1>Agregar grupo</h1>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-4">
+            <form action="/grupos/agregar" method="POST" onsubmit="return validarFormulario()">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="num_grupo" placeholder="Numero de grupo" maxlength="3"
+                        minlength="1" required />
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" name="anio" placeholder="Año" required />
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" name="ciclo" placeholder="Ciclo" required />
+                </div>
+                <div class="form-group">
+                    <select class="form-control" name="idMateria" required>
+                        {{#each lstMaterias}}
+                        <option value="{{idMateria}}">{{materia}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" name="idProfesor" required>
+                        {{#each lstProfesores}}
+                        <option value="{{idProfesor}}">{{profesor}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success btn-block">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function validarFormulario() {
+    var num_grupo = document.getElementsByName('num_grupo')[0].value;
+    var anio = document.getElementsByName('anio')[0].value;
+    var ciclo = document.getElementsByName('ciclo')[0].value;
+
+    if (num_grupo.length > 3 || num_grupo.length < 1) {
+        alert('El número de grupo debe tener entre 1 y 3 caracteres');
+        return false;
+    }
+
+    if (isNaN(anio) || anio < 1900 || anio > 3000) {
+        alert('El año debe ser un número válido entre 1900 y 3000');
+        return false;
+    }
+
+    if (isNaN(ciclo) || ciclo < 1 || ciclo > 99) {
+        alert('El ciclo debe ser un número válido entre 1 y 99');
+        return false;
+    }
+
+    return true;
+}
+</script>

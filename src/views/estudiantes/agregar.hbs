@@ -1,0 +1,56 @@
+<div class="container p-4">
+    <div class="row justify-content-center">
+        <h1>Agregar Estudiante</h1>
+    </div>
+    <div class="row justify-content-center mt-4">
+       <div class="col-md-4">
+        <form action="/estudiantes/agregar" method="POST"  onsubmit="return validarFormulario()">
+        <div class="form-group">
+                <input type="text" class="form-control" name="idestudiante" id="idestudiante" placeholder="Codigo del estudiante" autofocus />
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre del estudiante" autofocus />
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="apellido"  id="apellido" placeholder="Apellido del estudiante" />
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" name="email"   id="email" placeholder="Correo del estudiante" />
+            </div>
+            <div class="form-group">
+                <select class="form-control" name="idcarrera" id="idcarrera">
+                    {{#each lstCarreras}}
+                    <option value="{{idcarrera}}">{{carrera}}</option>
+                     {{/each}}
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="usuario" id="usuario" placeholder="Usuario del estudiante" />
+            </div>
+            <div class="form-group">
+                <button class="btn btn-success btn-block">Guardar</button>
+            </div>
+        </form>
+       </div>
+    </div>
+</div>
+
+
+<script>
+function validarFormulario() {
+    var idestudiante = document.getElementById('idestudiante').value;
+    var nombre = document.getElementById('nombre').value;
+    var apellido = document.getElementById('apellido').value;
+    var email = document.getElementById('email').value;
+    var idcarrera = document.getElementById('idcarrera').value;
+    var usuario = document.getElementById('usuario').value;
+
+    if (idestudiante === '' || nombre === '' || apellido === '' || email === '' || idcarrera === '' || usuario === '') {
+        alert('Por favor, complete todos los campos.');
+        return false; // Detiene el envío del formulario
+    }
+    // Puedes agregar más validaciones según tus necesidades
+
+    return true; // Permite el envío del formulario
+}
+</script>

@@ -1,0 +1,37 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card card-body">
+                <h3 class="text-center">Agregar Materia</h3>
+                <form action="/materias/agregar" method="POST" onsubmit="return validarFormulario()">
+                    <div class="form-group">
+                        <label for="idMateria">ID Materia</label>
+                        <input type="text" name="idMateria" id="idMateria" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="materia">Nombre de la Materia</label>
+                        <input type="text" name="materia" id="materia" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Agregar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+function validarFormulario() {
+    var idMateria = document.getElementById('idMateria').value;
+    var materia = document.getElementById('materia').value;
+
+    if (idMateria === '' || materia === '') {
+        alert('Por favor, complete todos los campos.');
+        return false; // Detiene el envío del formulario
+    }
+
+    // Puedes agregar más validaciones según tus necesidades
+
+    return true; // Permite el envío del formulario
+}
+</script>

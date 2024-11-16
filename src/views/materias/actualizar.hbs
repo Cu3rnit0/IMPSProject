@@ -1,0 +1,33 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card card-body">
+                <h3 class="text-center">Actualizar Materia</h3>
+                <form action="/materias/actualizar/{{materia.idMateria}}" method="POST" onsubmit="return validarFormulario()">
+                    <div class="form-group">
+                        <label for="materia">Nombre de la Materia</label>
+                        <input type="text" name="materia" id="materia" class="form-control" value="{{materia.materia}}">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+function validarFormulario() {
+    var materia = document.getElementById('materia').value;
+
+    if (materia === '') {
+        alert('Por favor, complete el campo de Nombre de la Materia.');
+        return false; // Detiene el envío del formulario
+    }
+
+    // Puedes agregar más validaciones según tus necesidades
+
+    return true; // Permite el envío del formulario
+}
+</script>
